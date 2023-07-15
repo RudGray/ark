@@ -1,11 +1,24 @@
 const express = require('express');
 const path = require('path');
-const app = express();
-var Parse = require('parse/node');
+const bodyParser = require('body-parser');
+const Parse = require('parse/node');
+const ejs = require('ejs');
+const fs = require('fs');
 
-// la deuxième clé est une clé de compte utilisateur back4app, spécialement créée pour ce projet
-Parse.initialize("4f58d833-4dc8-4ca2-bd19-3dc4dc4c75b5", "84NEosmgaXPVvhW8EaWuSMbd8yPmosBkbnauIQLn");
-Parse.serverURL = 'https://YOUR_PARSE_SERVER_URL/parse'
+const APP_ID = "wTz7nmWU4auHPb6Sa2eLnRXb2LSG38iy24IIF0CD";
+const JAVASCRIP_ID = "Y8ymzfpgnipCWP6FOf1PkhKeMK6pz9rLOb58ZMzV";
+
+Parse.initialize(APP_ID, JAVASCRIP_ID);
+Parse.serverURL="https://parseapi.back4app.com";
+
+const app = express();
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+
+// Configuration du middleware
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 
 // Répertoire pour les fichiers statiques
