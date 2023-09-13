@@ -42,7 +42,12 @@ class TitleScreen {
   init(container) {
     return new Promise(resolve => {
       this.createElement();
-      container.appendChild(this.element);
+      // container.appendChild(this.element);
+      if (container.firstChild) {
+          container.insertBefore(this.element, container.firstChild);
+      } else {
+          container.appendChild(elem);
+      }
       this.keyboardMenu = new KeyboardMenu();
       this.keyboardMenu.init(this.element);
       this.keyboardMenu.setOptions(this.getOptions(resolve))

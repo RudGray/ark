@@ -1,7 +1,7 @@
 .KeyboardMenu {
   border: 1px solid var(--border-color);
   background: var(--menu-background);
-  position: absolute;
+  /* position: absolute; */
 }
 .KeyboardMenu button {
  display: flex;
@@ -24,7 +24,10 @@
 }
 
 .KeyboardMenu .option {
-  position: relative;
+  /* position: relative; */
+  display: flex;
+  align-items: center;
+  
  }
  .KeyboardMenu .option .right {
   position: absolute;

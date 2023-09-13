@@ -8,4 +8,4 @@ function generateScenario() {
     return scenario;
 }
 
-Scenario.prototype = 
+// Scenario.prototype = 

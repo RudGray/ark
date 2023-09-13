@@ -6,6 +6,15 @@ class Overworld {
    this.map = null;
  }
 
+ /**
+  * Starts the game loop and keeps it going until the game is paused  or stopped 
+  * 
+  * 
+  * @returns {void}
+  * @memberof Overworld 
+  * 
+  * 
+  */
   startGameLoop() {
     const step = () => {
       //Clear off the canvas
@@ -95,9 +104,17 @@ class Overworld {
 
  }
 
+ /** 
+  * Initializes the game and starts the first map 
+  * @param {void}
+  * @returns {void}
+  * @memberof Overworld
+  * 
+ */
  async init() {
 
-  const container = document.querySelector(".game-container");
+  // const container = document.querySelector(".game-container");
+  const container = document.querySelector(".main");
 
   //Create a new Progress tracker
   this.progress = new Progress();

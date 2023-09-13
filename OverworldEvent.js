@@ -57,12 +57,12 @@ class OverworldEvent {
       text: this.event.text,
       onComplete: () => resolve()
     })
-    message.init( document.querySelector(".game-container") )
+    message.init( document.querySelector(".main") )
   }
 
   changeMap(resolve) {
     const sceneTransition = new SceneTransition();
-    sceneTransition.init(document.querySelector(".game-container"), () => {
+    sceneTransition.init(document.querySelector(".main"), () => {
       this.map.overworld.startMap( window.OverworldMaps[this.event.map], {
         x: this.event.x,
         y: this.event.y,
@@ -81,7 +81,7 @@ class OverworldEvent {
         resolve(didWin ? "WON_BATTLE" : "LOST_BATTLE");
       }
     })
-    battle.init(document.querySelector(".game-container"));
+    battle.init(document.querySelector(".main"));
 
   }
 
@@ -95,7 +95,7 @@ class OverworldEvent {
         this.map.overworld.startGameLoop();
       }
     });
-    menu.init(document.querySelector(".game-container"));
+    menu.init(document.querySelector(".main"));
   }
 
   addStoryFlag(resolve) {
@@ -110,7 +110,7 @@ class OverworldEvent {
         resolve();
       }
     })
-    menu.init(document.querySelector(".game-container"))
+    menu.init(document.querySelector(".main"))
   }
 
   init() {
