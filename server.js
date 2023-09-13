@@ -8,11 +8,7 @@ require('dotenv').config();
 
 
 // les variables d'environnement
-const API_ID = process.env.API_ID;
-const JS_KEY = process.env.JAVASCRIP_ID;
-
-
-Parse.initialize(APP_ID, JAVASCRIP_ID);
+Parse.initialize(process.env.APP_ID, process.env.JAVASCRIPT_ID);
 Parse.serverURL="https://parseapi.back4app.com";
 
 const app = express();
