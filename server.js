@@ -4,9 +4,13 @@ const bodyParser = require('body-parser');
 const Parse = require('parse/node');
 const ejs = require('ejs');
 const fs = require('fs');
+require('dotenv').config();
 
-const APP_ID = "wTz7nmWU4auHPb6Sa2eLnRXb2LSG38iy24IIF0CD";
-const JAVASCRIP_ID = "Y8ymzfpgnipCWP6FOf1PkhKeMK6pz9rLOb58ZMzV";
+
+// les variables d'environnement
+const API_ID = process.env.API_ID;
+const JS_KEY = process.env.JAVASCRIP_ID;
+
 
 Parse.initialize(APP_ID, JAVASCRIP_ID);
 Parse.serverURL="https://parseapi.back4app.com";
