@@ -1,0 +1,105 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "event": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["addStoryFlag", "textMessage", "walk", "stand", "changeMap", "quizz"]
+          },
+          "flag": {
+            "type": "string",
+            "enum": ["SEEN_INTRO"]
+          },
+          "text": {
+            "type": "string"
+          },
+          "who": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string",
+            "enum": ["down", "up", "left", "right"]
+          },
+          "time": {
+            "type": "number"
+          },
+          "map": {
+            "type": "string"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "addStoryFlag"
+                }
+              }
+            },
+            "then": {
+              "required": ["flag"]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "textMessage"
+                }
+              }
+            },
+            "then": {
+              "required": ["text"]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "walk"
+                }
+              }
+            },
+            "then": {
+              "required": ["who", "direction"]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "stand"
+                }
+              }
+            },
+            "then": {
+              "required": ["who", "direction", "time"]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "changeMap"
+                }
+              }
+            },
+            "then": {
+              "required": ["map", "x", "y", "direction"]
+            }
+          }
+        ]
+      }
+    },
+    "required": ["event"]
+  }
+  

@@ -16,6 +16,8 @@ class Overworld {
   * 
   */
   startGameLoop() {
+    this.how = this.element.querySelector(".how-to-play");
+    this.how.style.display = "none";
     const step = () => {
       //Clear off the canvas
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -53,7 +55,7 @@ class Overworld {
       
       if (!this.map.isPaused) {
         requestAnimationFrame(() => {
-          step();   
+          step();
         })
       }
     }
@@ -103,6 +105,18 @@ class Overworld {
   this.progress.startingHeroDirection = this.map.gameObjects.hero.direction;
 
  }
+/*
+ async fetchPlayerData(playerId) {
+  try {
+    const response = await fetch(`http://your-express-server.com/player-data/${playerId}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des données du joueur:', error);
+    throw error;
+  }
+}
+*/
 
  /** 
   * Initializes the game and starts the first map 
@@ -113,8 +127,24 @@ class Overworld {
  */
  async init() {
 
+  // Initilalisation des variables globales
+  // Jeu
+  window.game = {};
+  
+
   // const container = document.querySelector(".game-container");
   const container = document.querySelector(".main");
+
+  // // Supposez que vous avez un playerId (vous pouvez l'obtenir d'une manière ou d'une autre, peut-être stocké localement)
+  // const playerId = 'someUniqueId';
+  // const playerData = await this.fetchPlayerData(playerId);
+
+  // // À partir des données reçues, vous pourriez ajuster la manière dont vous initialisez le jeu. Par exemple:
+  // if (playerData.useSaveFile) {
+  //   this.progress = new Progress(playerData.saveData); // Si vous souhaitez initialiser Progress avec les données sauvegardées
+  // } else {
+  //   this.progress = new Progress();
+  // }
 
   //Create a new Progress tracker
   this.progress = new Progress();
@@ -125,9 +155,11 @@ class Overworld {
   })
   const useSaveFile = await this.titleScreen.init(container);
 
+
   //Potentially load saved data
   let initialHeroState = null;
   if (useSaveFile) {
+    console.log("useSaveFile: "+useSaveFile)
     this.progress.load();
     initialHeroState = {
       x: this.progress.startingHeroX,
@@ -135,10 +167,26 @@ class Overworld {
       direction: this.progress.startingHeroDirection,
     }
   }
+  if (!useSaveFile) {
+    // Traitez le cas où useSaveFile est undefined. Par exemple, utilisez une valeur par défaut ou arrêtez l'initialisation.
+
+    console.log("Erreur : Le serveur est momentanément indisponible.");
+    return;
+  }
 
   //Load the HUD
   this.hud = new Hud();
   this.hud.init(container);
+
+  // ark: Setup window.OverworldMaps
+  window.OverworldMaps = {};
+
+  console.log(" this.progress: "+ JSON.stringify(this.progress)) // kitchen
+
+  console.log(" this.progress.mapId: "+this.progress.mapId) // kitchen
+  // console.log(" initialHeroState: "+JSON.stringify(initialHeroState)) // {"x":0,"y":0,"direction":"down"}
+  console.log("window.OverworldMaps[this.progress.mapId] :", window.OverworldMaps[this.progress]);
+  console.log("window.OverworldMaps:", window.OverworldMaps); // objet vide
 
   //Start the first map
   this.startMap(window.OverworldMaps[this.progress.mapId], initialHeroState );

@@ -27,6 +27,7 @@
   /* position: relative; */
   display: flex;
   align-items: center;
+  height: inherit;
   
  }
  .KeyboardMenu .option .right {

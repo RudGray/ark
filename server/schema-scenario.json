@@ -1,0 +1,80 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "scenario": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Le titre du scénario ou du jeu."
+          },
+          "setting": {
+            "type": "object",
+            "properties": {
+              "worldDescription": {
+                "type": "string",
+                "description": "Description générale de l'univers du jeu."
+              },
+              "location": {
+                "type": "string",
+                "description": "Emplacement spécifique où se déroule le scénario."
+              },
+              "timePeriod": {
+                "type": "string",
+                "description": "Période temporelle (passé, présent, futur, époque spécifique, etc.)."
+              }
+            },
+            "required": ["worldDescription", "location", "timePeriod"]
+          },
+          "characters": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string",
+                  "enum": ["protagonist", "antagonist", "supporting", "background"]
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Une brève description ou un historique du personnage."
+                }
+              },
+              "required": ["name", "role", "description"]
+            }
+          },
+          "plot": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "eventDescription": {
+                  "type": "string",
+                  "description": "Description de l'événement ou de l'action."
+                },
+                "outcome": {
+                  "type": "string",
+                  "description": "Résultat ou conséquence de cet événement."
+                }
+              },
+              "required": ["eventDescription", "outcome"]
+            }
+          },
+          "challenges": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "Description d'un défi ou d'une énigme que le joueur doit surmonter."
+            }
+          }
+        },
+        "required": ["title", "setting", "characters", "plot"]
+      }
+    },
+    "required": ["scenario"]
+  }
+  

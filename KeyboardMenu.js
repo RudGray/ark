@@ -40,9 +40,6 @@ class KeyboardMenu {
       this.element.querySelector("button[data-button]:not([disabled])").focus();
     }, 10)
 
-    
-
-
   }
 
   createElement() {
@@ -52,7 +49,7 @@ class KeyboardMenu {
     //Description box element
     this.descriptionElement = document.createElement("div");
     this.descriptionElement.classList.add("DescriptionBox");
-    this.descriptionElement.innerHTML = (`<p>I will provide information!</p>`);
+    this.descriptionElement.innerHTML = (`<p>I will provide informations !</p>`);
     this.descriptionElementText = this.descriptionElement.querySelector("p");
   }
 

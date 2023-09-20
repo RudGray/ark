@@ -2,6 +2,7 @@ class OverworldEvent {
   constructor({ map, event}) {
     this.map = map;
     this.event = event;
+    this.zoomLevel = 1.0;
   }
 
   stand(resolve) {
@@ -111,6 +112,31 @@ class OverworldEvent {
       }
     })
     menu.init(document.querySelector(".main"))
+  }
+
+  drawImage(){
+    document.querySelector(".main"), () => {
+      this.map.overworld.startMap( window.OverworldMaps[this.event.map], {
+        x: this.event.x,
+        y: this.event.y,
+        direction: this.event.direction,
+      });
+    }
+
+    let w = canvas.width * zoomLevel;
+    let h = canvas.height * zoomLevel;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);  // clear the canvas
+    ctx.drawImage(img, 0, 0, w, h);
+  }
+  
+  zoomIn(){
+    this.zoomLevel += 0.1;
+    this.drawImage();
+  }
+
+  zoomOut(){
+    this.zoomLevel -= 0.1;
+    this.drawImage();
   }
 
   init() {
