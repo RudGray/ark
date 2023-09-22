@@ -35,16 +35,48 @@ class TitleScreen {
         handler: async () => {
           // Initialise the game,  the map and the first level's cutscenes dans la variable globale
           try {
-            const response = await fetch(`/demo-game`);
-            console.log(response);
-            if (!response.status === 200){
-              throw new Error(response.statusText);
-            }
-            const data = await response.json();
-            console.log(data);
+            const data = await serverRequests.getDemoInit();
+            // const response = await fetch(`/demo-game-init`);
+            
+            // // Vérifier si le statut de la réponse est différent de 200 (OK)
+            // if (!response.status === 200){
+            //   throw new Error(response.statusText);
+            // }
+            // const data = await response.json();
+            // // console.log("data:   ", data);
+            
+            // // Vérifier si les données du jeu et de la carte sont présentes dans la réponse du serveur
+            // const dataChecks = {
+            //   game: "Game data is missing from server response.",
+            //   map: "Map data is missing from server response.",
+            //   files: "Files data is missing from server response."
+            // };
+            // for (let key in dataChecks) {
+            //     if (!data[key]) {
+            //         throw new Error(dataChecks[key]);
+            //     }
+            // }
+
+            // // Stocker les données du jeu et de la carte dans les variables globales window
+            // window.game = data.game;
+            // window.map = data.map;
+            // window.files = data.files;
+            
+            // this.progress.loadMap(data.map.name);
+            // console.log(" progress : "+JSON.stringify(this.progress))
+
+            // Conversion des fichiers base64 en blobs et création des URL d'objet
+            // if (data.files && Array.isArray(data.files)) {
+            //   for(let i=0; i<data.files.length; i++){
+            //     const blob = utils.dataURLtoBlob(data.files[i].fileBase64);
+            //     const blobURL = URL.createObjectURL(blob);
+                
+            //     data.files[i]["blobURL"] = blobURL;
+            //   };
+            // }
+
             this.close();
             resolve(data);
-            console.log("New Game - Demo")
 
           } catch (error) {
             console.log('Erreur TitleScreen getDemo ');
@@ -66,9 +98,6 @@ class TitleScreen {
   getConnection(resolve) { }
 
   
-
-  
-
   createElement() {
     this.element = document.createElement("div");
     this.element.classList.add("TitleScreen");

@@ -12,10 +12,7 @@
           "setting": {
             "type": "object",
             "properties": {
-              "worldDescription": {
-                "type": "string",
-                "description": "Description générale de l'univers du jeu."
-              },
+              "worldDescription": {"type":"string", "description":"Description générale de l'univers du jeu."},
               "location": {
                 "type": "string",
                 "description": "Emplacement spécifique où se déroule le scénario."

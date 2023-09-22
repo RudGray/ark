@@ -56,7 +56,7 @@ class Person extends GameObject {
       this.isStanding = true;
       this.standBehaviorTimeout = setTimeout(() => {
         utils.emitEvent("PersonStandComplete", {
-          whoId: this.id
+          whoId: this.name
         })
         this.isStanding = false;
       }, behavior.time)
@@ -72,7 +72,7 @@ class Person extends GameObject {
       if (this.movingProgressRemaining === 0) {
         //We finished the walk!
         utils.emitEvent("PersonWalkingComplete", {
-          whoId: this.id
+          whoId: this.name
         })
 
       }

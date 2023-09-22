@@ -1,3 +1,4 @@
+const fetch = require('node-fetch');
 const parser = {
     parseMap(map) {
         return map;
@@ -28,6 +29,17 @@ const parser = {
         map.walls = map.walls.map(utils.parseWall);
 
         return map;
+    },
+
+    async getFileAsBase64(url) {
+        const response = await fetch(url);
+        
+        // Get mime type (like 'image/jpeg' or 'image/png')
+        const contentType = response.headers.get('content-type');
+
+        const buffer = await response.buffer();
+        const base64 = buffer.toString('base64');
+        return `data:${contentType};base64,${base64}`;
     }
 }
 

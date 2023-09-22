@@ -13,7 +13,6 @@ Parse.initialize(process.env.APP_ID, process.env.JAVASCRIPT_ID);
 Parse.serverURL="https://parseapi.back4app.com";
 
 
-
 const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -63,40 +62,63 @@ app.get('/player-data/:playerId', async (req, res) => {
 });
 
 app.get('/demo-game-init', async (req, res) => {
+  console.log("demo-game-init")
   
   try {
+    // téléchargement du jeu legeend
     const DemoGame = Parse.Object.extend("DemoGame");
     const demoGameQuery = new Parse.Query(DemoGame);
     demoGameQuery.equalTo("name", "legend");
-    
     const demoGame = await demoGameQuery.first();
+    // console.log("demoGame :   ", demoGame)
     
     if (!demoGame) {
         throw new Error("Game not found.");
     }
 
+    // téléchargement de la première map du jeu legend
     const DemoMap = Parse.Object.extend("DemoMap");
     const demoMapQuery = new Parse.Query(DemoMap);
     demoMapQuery.equalTo("game_id", demoGame);  // Utilisez l'objet game directement
     demoMapQuery.equalTo("level", 0);
-    
     const demoMap = await demoMapQuery.first();
-
-    if (!demoMap) {
-        throw new Error("Map not found.");
-    }
-
-    const DemoCutscene = Parse.Object.extend("DemoCutscene");
-    const demoCutsceneQuery = new Parse.Query(DemoCutscene);
-    demoCutsceneQuery.equalTo("map_id", demoMap);
-    const demoCutscenes = await demoCutsceneQuery.find();
-
-    // res.render('game', { game: demoGame, map: demoMap, cutscenes: demoCutscenes });
-    res.json({ game: demoGame.toJSON(), map: demoMap.toJSON(), cutscenes: demoCutscenes.map(cutscene => cutscene.toJSON()) });
+    // console.log("demoMap :   ", demoMap)
     
+    if (!demoMap) {
+      throw new Error("Map not found.");
+    }
+    
+    // télécharger les fichiers de la première map du jeu legend
+    const DemoFiles = Parse.Object.extend("DemoFiles");
+    const demoFilesQuery = new Parse.Query(DemoFiles);
+    demoFilesQuery.equalTo("map_id", demoMap);
+    const mapFiles = await demoFilesQuery.find();
+    // console.log("mapFiles :   ", mapFiles)
+
+    // Télécharger les fichiers de la première map du jeu legend et les convertir en base64
+    const mapFilesPromises = mapFiles.map(async (file) => {
+      // console.log("file :   ", file.toJSON() )
+      const fileUrl = file.get("file")._url;  // Remplacez "fileUrl" par le vrai nom de l'attribut si différent
+      // console.log("fileUrl :   ", fileUrl )
+      // console.log("fileUrl._url :   ", fileUrl._url )
+      const fileBase64 = await parser.getFileAsBase64(fileUrl);
+      
+      const fileObject = file.toJSON();
+      fileObject.fileBase64 = fileBase64;  // Ajoutez le fichier en base64 à l'objet
+      return fileObject;
+    });
+
+    const mapFilesWithBase64 = await Promise.all(mapFilesPromises);
+
+    // renvoyez le JSON comme vous l'avez fait précédemment, mais ajoutez les fichiers
+    res.json({ 
+      game: demoGame.toJSON(), 
+      map: demoMap.toJSON(), 
+      files: mapFilesWithBase64 
+    });
 
   } catch (error) {
-    console.log("error /demo-game:", error);
+    console.log("error /demo-game-init: ", error);
     res.status(500).send(error.message);
   }
 });

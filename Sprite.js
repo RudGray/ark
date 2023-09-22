@@ -1,6 +1,7 @@
 class Sprite {
   constructor(config) {
 
+    console.log("config.src: "+config.src);
     //Set up the image
     this.image = new Image();
     this.image.src = config.src;
@@ -72,6 +73,10 @@ class Sprite {
   
 
   draw(ctx, cameraPerson) {
+    // console.log("method draw in Sprite.js"  );
+    // console.log("this.gameObject.x: "+this.gameObject.x);
+    // console.log("cameraPerson.x: "+cameraPerson.x);
+
     const x = this.gameObject.x - 8 + utils.withGrid(10.5) - cameraPerson.x;
     const y = this.gameObject.y - 18 + utils.withGrid(6) - cameraPerson.y;
 

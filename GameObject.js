@@ -1,13 +1,20 @@
+/**
+ * data pour Person
+ * {"type":"Person","name":"hero","isPlayerControlled":true,"x":10,"y":5}
+ */
 class GameObject {
   constructor(config) {
-    this.id = null;
+    this.type = config.type || "GameObject";
+    this.name = config.name || "unnamed";
     this.isMounted = false;
     this.x = config.x || 0;
     this.y = config.y || 0;
     this.direction = config.direction || "down";
+    console.log("config in constructor GameObjrvy: "+JSON.stringify(config));
     this.sprite = new Sprite({
       gameObject: this,
-      src: config.src || "./images/characters/people/hero.png",
+      // src: config.blobUrl || "./images/characters/people/hero.png",
+      src: config.blobUrl
     });
 
     //These happen once on map startup.
@@ -40,7 +47,7 @@ class GameObject {
 
     //Setting up our event with relevant info
     let eventConfig = this.behaviorLoop[this.behaviorLoopIndex];
-    eventConfig.who = this.id;
+    eventConfig.who = this.name;
 
     //Create an event instance out of our next event config
     const eventHandler = new OverworldEvent({ map, event: eventConfig });

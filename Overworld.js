@@ -23,20 +23,20 @@ class Overworld {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
       //Establish the camera person
-      const cameraPerson = this.map.gameObjects.hero;
+      const cameraPerson = this.map.hero;
 
 
       //Update all objects
-      //console.log(this.map.gameObjects);
       Object.values(this.map.gameObjects).forEach(object => {
-        console.log("-------------------");
-
-        //console.log("obj: "+object);
-        //console.log("dir: "+this.directionInput.direction);
         object.update({
           arrow: this.directionInput.direction,
           map: this.map
         })
+      })
+      //Update the hero
+      this.map.hero.update({
+        arrow: this.directionInput.direction,
+        map: this.map
       })
       
 
@@ -49,6 +49,8 @@ class Overworld {
       }).forEach(object => {
         object.sprite.draw(this.ctx, cameraPerson);
       })
+      //Draw Hero
+      this.map.hero.sprite.draw(this.ctx, cameraPerson);
 
       //Draw Upper layer
       this.map.drawUpperImage(this.ctx, cameraPerson);
@@ -85,38 +87,60 @@ class Overworld {
    })
  }
 
- startMap(mapConfig, heroInitialState=null) {
-  this.map = new OverworldMap(mapConfig);
+ startMap(map, files, heroInitialState=null) {
+  this.map = new OverworldMap(map, files);
   this.map.overworld = this;
   this.map.mountObjects();
+  this.map.extractHero();
 
+  // console.log("hero x : "+this.map.hero.x)
+
+  function stringifyWithCircularCheck(obj) {
+    const seen = new Set();
+    return JSON.stringify(obj, (key, value) => {
+      if (typeof value === 'object' && value !== null) {
+        if (seen.has(value)) {
+          return '[Cyclic object]';
+        }
+        seen.add(value);
+      }
+      return value;
+    });
+  }
+
+  // console.log("heroInitialState: "+JSON.stringify(heroInitialState))
+  console.log("hero: "+stringifyWithCircularCheck(this.map.hero))
   if (heroInitialState) {
-    const {hero} = this.map.gameObjects;
-    this.map.removeWall(hero.x, hero.y);
-    hero.x = heroInitialState.x;
-    hero.y = heroInitialState.y;
-    hero.direction = heroInitialState.direction;
-    this.map.addWall(hero.x, hero.y);
+    // const {hero} = this.map.gameObjects;
+
+
+// console.log("this.map.gameObjects: " + stringifyWithCircularCheck(this.map.gameObjects));
+    
+    
+
+    this.map.removeWall(this.map.hero.x, this.map.hero.y);
+    this.map.hero.x = heroInitialState.x;
+    this.map.hero.y = heroInitialState.y;
+    this.map.hero.direction = heroInitialState.direction;
+    this.map.addWall(this.map.hero.x, this.map.hero.y);
   }
 
-  this.progress.mapId = mapConfig.id;
-  this.progress.startingHeroX = this.map.gameObjects.hero.x;
-  this.progress.startingHeroY = this.map.gameObjects.hero.y;
-  this.progress.startingHeroDirection = this.map.gameObjects.hero.direction;
+  // console.log("hero x : "+this.map.hero.x)
 
+  this.progress.mapName = map.name;
+  this.progress.map_id = map.map_id;
+  this.progress.startingHeroX = this.map.hero.x;
+  this.progress.startingHeroY = this.map.hero.y;
+  this.progress.startingHeroDirection = this.map.hero.direction;
+
+  // console.log("hero x : "+this.map.hero.x)
+  // console.log("config person game object : "+stringifyWithCircularCheck(this.map.hero))
+
+  // console.log("window.game : "+stringifyWithCircularCheck(window.game))
+  // console.log("window.map : "+stringifyWithCircularCheck(window.map))
+  
  }
-/*
- async fetchPlayerData(playerId) {
-  try {
-    const response = await fetch(`http://your-express-server.com/player-data/${playerId}`);
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Erreur lors de la récupération des données du joueur:', error);
-    throw error;
-  }
-}
-*/
+
 
  /** 
   * Initializes the game and starts the first map 
@@ -153,43 +177,39 @@ class Overworld {
   this.titleScreen = new TitleScreen({
     progress: this.progress
   })
-  const useSaveFile = await this.titleScreen.init(container);
-
+  // const useSaveFile = await this.titleScreen.init(container);
+  const dataGame = await this.titleScreen.init(container);
+ 
 
   //Potentially load saved data
   let initialHeroState = null;
-  if (useSaveFile) {
-    console.log("useSaveFile: "+useSaveFile)
-    this.progress.load();
-    initialHeroState = {
-      x: this.progress.startingHeroX,
-      y: this.progress.startingHeroY,
-      direction: this.progress.startingHeroDirection,
-    }
-  }
-  if (!useSaveFile) {
-    // Traitez le cas où useSaveFile est undefined. Par exemple, utilisez une valeur par défaut ou arrêtez l'initialisation.
+  // if (dataGame) {
+  //   console.log("dataGame: "+JSON.stringify(dataGame))
+    
+  //   this.progress.loadFromLocalStorage();
+  //   initialHeroState = {
+  //     x: this.progress.startingHeroX || 0,
+  //     y: this.progress.startingHeroY || 0,
+  //     direction: this.progress.startingHeroDirection || "down",
+  //   }
+  // }
+  // if (!dataGame) {
+  //   // Traitez le cas où useSaveFile est undefined. Par exemple, utilisez une valeur par défaut ou arrêtez l'initialisation.
 
-    console.log("Erreur : Le serveur est momentanément indisponible.");
-    return;
-  }
+  //   console.log("Erreur : Le serveur est momentanément indisponible.");
+  //   return;
+  // }
 
   //Load the HUD
   this.hud = new Hud();
   this.hud.init(container);
 
-  // ark: Setup window.OverworldMaps
-  window.OverworldMaps = {};
+  // arkgame_v2 : Start Game : sélection du jeu
 
-  console.log(" this.progress: "+ JSON.stringify(this.progress)) // kitchen
 
-  console.log(" this.progress.mapId: "+this.progress.mapId) // kitchen
-  // console.log(" initialHeroState: "+JSON.stringify(initialHeroState)) // {"x":0,"y":0,"direction":"down"}
-  console.log("window.OverworldMaps[this.progress.mapId] :", window.OverworldMaps[this.progress]);
-  console.log("window.OverworldMaps:", window.OverworldMaps); // objet vide
-
-  //Start the first map
-  this.startMap(window.OverworldMaps[this.progress.mapId], initialHeroState );
+  // Start the first map
+  // this.startMap(window.OverworldMaps[this.progress.mapId], initialHeroState );
+  this.startMap(window.map, window.files, initialHeroState );
 
   //Create controls
   this.bindActionInput();
@@ -201,12 +221,6 @@ class Overworld {
   //Kick off the game!
   this.startGameLoop();
 
-
-  // this.map.startCutscene([
-  //   { type: "battle", enemyId: "beth" }
-  //   // { type: "changeMap", map: "DemoRoom"}
-  //   // { type: "textMessage", text: "This is the very first message!"}
-  // ])
 
  }
 }

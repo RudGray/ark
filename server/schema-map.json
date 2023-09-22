@@ -1,137 +1,36 @@
 
-
-
-
-
-
-
-
-
-
-
-
---------------------- fomat en base de données :: Back4app
-id:"",
-lowerSrc:"",
-upperSrc:"",
-gameObjects: [
-  {name: "", isPlayerControlled: Boolean, x: Number, y: Number, direction:"", src: "", 
-      behaviorLoop: [{type: "", direction: "", time: Number}], 
-      talking: [{required: [""], events: [{type: "", text: "", faceHero: ""}]}]
-   },
-],
-cutsceneSpaces: [
-  {x: Number, y: Number, disqualify: [""], events: [{type: "", text: "", faceHero: ""}]},
-],
-walls: [
-  {x: Number, y: Number},
-],
-
-talking: [
-            {
-              required: ["streetBattle"],
-              events: [
-                { type: "textMessage", text: "You are quite capable.", faceHero: "streetNpcC" },
-              ]
-            },
-            {
-              events: [
-                { type: "textMessage", text: "You should have just stayed home!", faceHero: "streetNpcC" },
-                { type: "battle", enemyId: "streetBattle" },
-                { type: "addStoryFlag", flag: "streetBattle"},
-              ]
-            },
-          ]
-
---------------------- format initial
 {
-  id: "kitchen",
-  lowerSrc: "jEJevBBwvq",
-  upperSrc: "YPOVI1ZIUd",
-  gameObjects: {
-    hero: new Person({
-      isPlayerControlled: true, 
-      x: utils.withGrid(10),
-      y: utils.withGrid(5),
-    }),
-    kitchenNpcA: new Person({
-      x: utils.withGrid(9),
-      y: utils.withGrid(5),
-      direction: "up",
-      src: "ftVHA4zkPn",
-      talking: [
-        {
-          events: [
-            { type: "textMessage", text: "** They don't want to talk to you **",},
-          ]
-        }
+  "$info":"fomat MAP en base de données :: Back4app",
+  "$class": "string",
+  "map_id": "string",
+  "id": "string",
+  "lowerSrc": "string",
+  "upperSrc": "string",
+  
+  "gameObjects": [
+    { "gameObject_id": "string", "name": "string", "isPlayerControlled": "boolean", "x": "number", "y": "number",
+      "direction": "string", "src": "string", 
+      "behaviorLoop": [ { "type": "string", "direction": "string", "time": "number" } ],
+      "talking": [ 
+        { "required": ["string"], "events": [ { "type": "string", "text": "string", "faceHero": "string" } ] }
       ]
-    }),
-    kitchenNpcB: new Person({
-      x: utils.withGrid(3),
-      y: utils.withGrid(6),
-      src: "RdcOoQecEQ",
-      talking: [
-        {
-          events: [
-            { type: "textMessage", text: "People take their jobs here very seriously.", faceHero: "kitchenNpcB" },
-          ]
-        }
-      ]
-    }),
-  },
-  cutsceneSpaces: {
-    [utils.asGridCoord(5,10)]: [
-      {
-        events: [
-          { 
-            type: "changeMap", 
-            map: "DiningRoom",
-            x: utils.withGrid(7),
-            y: utils.withGrid(3),
-            direction: "down"
-          }
-        ]
-      }
-    ],
-    [utils.asGridCoord(10,6)]: [{
-      disqualify: ["SEEN_INTRO"],
-      events: [
-        { type: "addStoryFlag", flag: "SEEN_INTRO"},
-        { type: "textMessage", text: "* You are chopping ingredients on your first day as a Pizza Chef at a famed establishment in town. *"},
-        { type: "walk", who: "kitchenNpcA", direction: "down"},
-        { type: "stand", who: "kitchenNpcA", direction: "right", time: 200},
-        { type: "stand", who: "hero", direction: "left", time: 200},
-        { type: "textMessage", text: "Ahem. Is this your best work?"},
-        { type: "textMessage", text: "These pepperonis are completely unstable! The pepper shapes are all wrong!"},
-        { type: "textMessage", text: "Don't even get me started on the mushrooms."},
-        { type: "textMessage", text: "You will never make it in pizza!"},
-        { type: "stand", who: "kitchenNpcA", direction: "right", time: 200},
-        { type: "walk", who: "kitchenNpcA", direction: "up"},
-        { type: "stand", who: "kitchenNpcA", direction: "up", time: 300},
-        { type: "stand", who: "hero", direction: "down", time: 400},
-        { type: "textMessage", text: "* The competition is fierce! You should spend some time leveling up your Pizza lineup and skills. *"},
-        {
-          type: "changeMap",
-          map: "Street",
-          x: utils.withGrid(5),
-          y: utils.withGrid(10),
-          direction: "down"
-        },
-      ]
-    }]
-  },
-  walls: function() {
-    let walls = {};
-    [
-      "2,4", "3,4", "5,4", "6,4", "7,4", "8,4", "11,4", "11,5", "12,5", "1,5", 
-      "1,6", "1,7", "1,9", "2,9", "6,7", "7,7", "9,7", "10,7", "9,9", "10,9", 
-      "3,10", "4,10", "6,10", "7,10", "8,10", "11,10", "12,10", "0,8", "5,11", 
-      "4,3", "9,4", "10,4", "13,6", "13,7", "13,8", "13,9"
-    ].forEach(coord => {
-      let [x,y] = coord.split(",");
-      walls[utils.asGridCoord(x,y)] = true;
-    })
-    return walls;
-  }(),
+    }
+  ],
+  
+  "cutsceneSpaces": [
+    { "cutsceneSpace_id":"string",  "x": "number", "y": "number", "disqualify": ["string"], 
+      "events": [ { "type": "string", "text": "string", "faceHero": "string" } ] }
+  ],
+
+  "walls": [ { "x": "number", "y": "number" } ],
+
+  "talking": [
+    { "required": ["string"], "events": [ { "type": "string", "text": "string", "faceHero": "string" } ] },
+    { "events": [ 
+      { "type": "string", "text": "string", "faceHero": "string" }, 
+      { "type": "string", "enemyId": "string" },
+      { "type": "string", "flag": "string" }
+    ]}
+  ]
 }
+
