@@ -6,7 +6,7 @@ class OverworldMap {
     // Attacher les images aux gameObjects
     for (let gameObject of this.gameObjects) {
       if (gameObject.src) {
-        gameObject.blobUrl = utils.findImageBlobUrl(files, gameObject.src);
+        gameObject.blobURL = utils.findImageBlobUrl(files, gameObject.src);
       }
     }
     this.hero = null;
@@ -25,7 +25,7 @@ class OverworldMap {
   }
 
   drawLowerImage(ctx, cameraPerson) {
-    console.log("ctx: " +ctx);
+    // console.log("ctx: " +ctx);
     ctx.drawImage(
       this.lowerImage, 
       utils.withGrid(10.5) - cameraPerson.x, 
@@ -79,18 +79,7 @@ class OverworldMap {
               throw new Error(`Unknown gameObject type: ${config.type}`);
         }
 
-        // function stringifyWithCircularCheck(obj) {
-        //   const seen = new Set();
-        //   return JSON.stringify(obj, (key, value) => {
-        //     if (typeof value === 'object' && value !== null) {
-        //       if (seen.has(value)) {
-        //         return '[Cyclic object]';
-        //       }
-        //       seen.add(value);
-        //     }
-        //     return value;
-        //   });
-        // }
+       
         
         // console.log("this.map.gameObjects: " + stringifyWithCircularCheck(this.map.gameObjects));
         // console.log("objectInstance: "+stringifyWithCircularCheck(objectInstance));
@@ -142,9 +131,23 @@ class OverworldMap {
   }
 
   async startCutscene(events) {
+    console.log("OverworldMap startCutscene");
+    
+  //   {
+  //     type: "changeMap",
+  //     map: "Street",
+  //     x: 5,
+  //     y: 10,
+  //     direction: "down"
+  // }
+
     this.isCutscenePlaying = true;
 
     for (let i=0; i<events.length; i++) {
+      if(events[i].type === "changeMap") {
+        console.log("OverworldMap startCutscene changeMap");
+        console.log("events[i]: "+events[i]);
+      }
       const eventHandler = new OverworldEvent({
         event: events[i],
         map: this,

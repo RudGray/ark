@@ -6,7 +6,13 @@ class OverworldEvent {
   }
 
   stand(resolve) {
-    const who = this.map.gameObjects[ this.event.who ];
+    let who;
+    if (this.event.who === 'hero') {
+      who = this.map.hero;
+    } else {
+      who = this.map.gameObjects.find(object => object.name === this.event.who);
+    }
+
     who.startBehavior({
       map: this.map
     }, {
@@ -26,7 +32,15 @@ class OverworldEvent {
   }
 
   walk(resolve) {
-    const who = this.map.gameObjects[ this.event.who ];
+    let who;
+    if (this.event.who === 'hero') {
+      who = this.map.hero;
+    } else {
+      who = this.map.gameObjects.find(object => object.name === this.event.who);
+    }
+
+
+
     who.startBehavior({
       map: this.map
     }, {
@@ -47,8 +61,6 @@ class OverworldEvent {
   }
 
   textMessage(resolve) {
-
-    
     if (this.event.faceHero) {
       const obj = this.map.gameObjects[this.event.faceHero];
       obj.direction = utils.oppositeDirection(this.map.gameObjects["hero"].direction);
@@ -62,6 +74,7 @@ class OverworldEvent {
   }
 
   changeMap(resolve) {
+    console.log("OverworldEvent.changeMap");
     const sceneTransition = new SceneTransition();
     sceneTransition.init(document.querySelector(".main"), () => {
       this.map.overworld.startMap( window.OverworldMaps[this.event.map], {

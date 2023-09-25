@@ -2,6 +2,7 @@
  * data pour Person
  * {"type":"Person","name":"hero","isPlayerControlled":true,"x":10,"y":5}
  */
+
 class GameObject {
   constructor(config) {
     this.type = config.type || "GameObject";
@@ -16,7 +17,7 @@ class GameObject {
     this.sprite = new Sprite({
       gameObject: this,
       // src: config.blobUrl || "./images/characters/people/hero.png",
-      src: config.blobUrl
+      src: config.blobURL
     });
 
     //These happen once on map startup.

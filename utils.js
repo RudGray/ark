@@ -61,6 +61,19 @@ const utils = {
   findImageBlobUrl(files, objectId) {
     const file = files.find(f => f.objectId === objectId);
     return file ? file.blobURL : null;
+  },
+
+  stringifyWithCircularCheck(obj) {
+    const seen = new Set();
+    return JSON.stringify(obj, (key, value) => {
+      if (typeof value === 'object' && value !== null) {
+        if (seen.has(value)) {
+          return '[Cyclic object]';
+        }
+        seen.add(value);
+      }
+      return value;
+    });
   }
    
 }
