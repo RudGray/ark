@@ -91,6 +91,7 @@ class Overworld {
   this.map = new OverworldMap(map, files);
   this.map.overworld = this;
   this.map.mountObjects();
+  this.map.scaleWalls();
   this.map.extractHero();
 
   // console.log("hero x : "+this.map.hero.x)

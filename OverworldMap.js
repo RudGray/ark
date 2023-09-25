@@ -100,6 +100,18 @@ class OverworldMap {
       }
   }
 
+  scaleWalls() {
+    let wallsObject = {};
+    this.walls.forEach(item => {
+        const coordinates = item.split(',').map(Number);  // Convertit chaque chaîne en nombre
+        const scaledCoordinates = coordinates.map(coordinate => utils.withGrid(coordinate));
+        const key = scaledCoordinates.join(',');
+        wallsObject[key] = true;
+    });
+    this.walls = wallsObject;
+  }
+
+
   extractHero() {
     const heroIndex = this.gameObjects.findIndex(object => object.isPlayerControlled);
     if (heroIndex !== -1) {
