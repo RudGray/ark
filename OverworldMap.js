@@ -133,20 +133,16 @@ class OverworldMap {
   async startCutscene(events) {
     console.log("OverworldMap startCutscene");
     
-  //   {
-  //     type: "changeMap",
-  //     map: "Street",
-  //     x: 5,
-  //     y: 10,
-  //     direction: "down"
-  // }
-
+    
     this.isCutscenePlaying = true;
-
+    
     for (let i=0; i<events.length; i++) {
       if(events[i].type === "changeMap") {
         console.log("OverworldMap startCutscene changeMap");
         console.log("events[i]: "+events[i]);
+
+
+
       }
       const eventHandler = new OverworldEvent({
         event: events[i],

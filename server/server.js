@@ -25,6 +25,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 // Répertoire pour les fichiers statiques
 app.use(express.static(path.join(__dirname, '../.')));
+app.use(express.json()); // to support JSON-encoded bodies
 
 // Route par défaut
 app.get('/', (req, res) => {
@@ -123,7 +124,55 @@ app.get('/demo-game-init', async (req, res) => {
   }
 });
 
+// {game, map_id, x, y, direction}
+app.get('/get-change-map', async (req, res) => {
+  console.log("get change map")
+  console.log("req :   ", req.query)
+  
+  try {
+    // téléchargement de la première map du jeu legend
+    const DemoMap = Parse.Object.extend("DemoMap");
+    const demoMapQuery = new Parse.Query(DemoMap);
+    const demoMap = await demoMapQuery.get(req.map_id);
+    // console.log("demoMap :   ", demoMap)
+    
+    if (!demoMap) {
+      throw new Error("Map not found.");
+    }
+    
+    // télécharger les fichiers de la première map du jeu legend
+    const DemoFiles = Parse.Object.extend("DemoFiles");
+    const demoFilesQuery = new Parse.Query(DemoFiles);
+    demoFilesQuery.equalTo("map_id", demoMap);
+    const mapFiles = await demoFilesQuery.find();
+    // console.log("mapFiles :   ", mapFiles)
 
+    // Télécharger les fichiers de la première map du jeu legend et les convertir en base64
+    const mapFilesPromises = mapFiles.map(async (file) => {
+      // console.log("file :   ", file.toJSON() )
+      const fileUrl = file.get("file")._url;  // Remplacez "fileUrl" par le vrai nom de l'attribut si différent
+      // console.log("fileUrl :   ", fileUrl )
+      // console.log("fileUrl._url :   ", fileUrl._url )
+      const fileBase64 = await parser.getFileAsBase64(fileUrl);
+      
+      const fileObject = file.toJSON();
+      fileObject.fileBase64 = fileBase64;  // Ajoutez le fichier en base64 à l'objet
+      return fileObject;
+    });
+
+    const mapFilesWithBase64 = await Promise.all(mapFilesPromises);
+
+    // renvoyez le JSON comme vous l'avez fait précédemment, mais ajoutez les fichiers
+    res.json({ 
+      map: demoMap.toJSON(), 
+      files: mapFilesWithBase64 
+    });
+
+  } catch (error) {
+    console.log("error /get change map : ", error);
+    res.status(500).send(error.message);
+  }
+});
 
 // Lancement du serveur
 const port = process.env.PORT || 3000;
