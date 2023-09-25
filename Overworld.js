@@ -92,6 +92,7 @@ class Overworld {
   this.map.overworld = this;
   this.map.mountObjects();
   this.map.scaleWalls();
+  this.map.scaleCutsceneSpaces();
   this.map.extractHero();
 
   // console.log("hero x : "+this.map.hero.x)
@@ -110,7 +111,7 @@ class Overworld {
   }
 
   // console.log("heroInitialState: "+JSON.stringify(heroInitialState))
-  console.log("hero: "+stringifyWithCircularCheck(this.map.hero))
+  // console.log("hero: "+stringifyWithCircularCheck(this.map.hero))
   if (heroInitialState) {
     // const {hero} = this.map.gameObjects;
 

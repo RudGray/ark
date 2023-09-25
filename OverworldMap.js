@@ -111,6 +111,27 @@ class OverworldMap {
     this.walls = wallsObject;
   }
 
+  scaleCutsceneSpaces() {
+    const scaledCutsceneSpaces = {};
+    for (let coord in this.cutsceneSpaces) {
+        const [x, y] = coord.split(',').map(Number);
+        const scaledCoord = `${utils.withGrid(x)},${utils.withGrid(y)}`;
+        scaledCutsceneSpaces[scaledCoord] = this.cutsceneSpaces[coord].map(item => {
+            if (item.events) {
+                item.events = item.events.map(event => {
+                    if (event.x !== undefined && event.y !== undefined) {
+                        event.x = utils.withGrid(event.x);
+                        event.y = utils.withGrid(event.y);
+                    }
+                    return event;
+                });
+            }
+            return item;
+        });
+    }
+    this.cutsceneSpaces = scaledCutsceneSpaces;  // Mettez à jour cutsceneSpaces avec les données mises à l'échelle
+  }
+
 
   extractHero() {
     const heroIndex = this.gameObjects.findIndex(object => object.isPlayerControlled);
