@@ -90,25 +90,25 @@ class Overworld {
  startMap(map, files, heroInitialState=null) {
   this.map = new OverworldMap(map, files);
   this.map.overworld = this;
-  this.map.mountObjects();
   this.map.scaleWalls();
   this.map.scaleCutsceneSpaces();
+  this.map.mountObjects();
   this.map.extractHero();
 
   // console.log("hero x : "+this.map.hero.x)
 
-  function stringifyWithCircularCheck(obj) {
-    const seen = new Set();
-    return JSON.stringify(obj, (key, value) => {
-      if (typeof value === 'object' && value !== null) {
-        if (seen.has(value)) {
-          return '[Cyclic object]';
-        }
-        seen.add(value);
-      }
-      return value;
-    });
-  }
+  // function stringifyWithCircularCheck(obj) {
+  //   const seen = new Set();
+  //   return JSON.stringify(obj, (key, value) => {
+  //     if (typeof value === 'object' && value !== null) {
+  //       if (seen.has(value)) {
+  //         return '[Cyclic object]';
+  //       }
+  //       seen.add(value);
+  //     }
+  //     return value;
+  //   });
+  // }
 
   // console.log("heroInitialState: "+JSON.stringify(heroInitialState))
   // console.log("hero: "+stringifyWithCircularCheck(this.map.hero))
