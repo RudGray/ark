@@ -203,8 +203,8 @@ class Overworld {
   // }
 
   //Load the HUD
-  this.hud = new Hud();
-  this.hud.init(container);
+  // this.hud = new Hud();
+  // this.hud.init(container);
 
   // arkgame_v2 : Start Game : sélection du jeu
 
