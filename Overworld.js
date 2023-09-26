@@ -17,17 +17,17 @@ class Overworld {
   */
   startGameLoop() {
     console.log("startGameLoop");
-    this.how = this.element.querySelector(".how-to-play");
-    this.how.style.display = "none";
+    // this.how = this.element.querySelector(".how-to-play");
+    // this.how.style.display = "none";
 
-    this.wrap = this.element.querySelector(".game-container-wrapper");
-    this.wrap.style.width = "100%";
-    // this.wrap.removeProperty("display");
+    // this.wrap = this.element.querySelector(".game-container-wrapper");
     // this.wrap.style.width = "100%";
-    // this.wrap.style.position = "relative";
-    // Instancier ArrowPad ici
-    this.arrowPad = new ArrowPad();
-    this.arrowPad.init();
+    // // this.wrap.removeProperty("display");
+    // // this.wrap.style.width = "100%";
+    // // this.wrap.style.position = "relative";
+    // // Instancier ArrowPad ici
+    // this.arrowPad = new ArrowPad();
+    // this.arrowPad.init();
 
 
     const step = () => {
@@ -198,13 +198,29 @@ class Overworld {
   // Start the first map
   // this.startMap(window.OverworldMaps[this.progress.mapId], initialHeroState );
   this.startMap(window.map, window.files, initialHeroState );
+  
+  
+  
+  
+  this.how = this.element.querySelector(".how-to-play");
+  this.how.style.display = "none";
 
-  //Create controls
-  this.bindActionInput();
-  this.bindHeroPositionCheck();
+  this.wrap = this.element.querySelector(".game-container-wrapper");
+  this.wrap.style.width = "100%";
 
-  this.directionInput = new DirectionInput();
-  this.directionInput.init();
+  // Instancier ArrowPad ici
+  this.arrowPad = new ArrowPad();
+  this.arrowPad.init();
+
+
+  
+    //Create controls
+    this.bindActionInput();
+    this.bindHeroPositionCheck();
+  
+    this.directionInput = new DirectionInput();
+    this.directionInput.init();
+
 
   //Kick off the game!
   this.startGameLoop();

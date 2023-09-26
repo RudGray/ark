@@ -39,8 +39,6 @@ class OverworldEvent {
       who = this.map.gameObjects.find(object => object.name === this.event.who);
     }
 
-
-
     who.startBehavior({
       map: this.map
     }, {

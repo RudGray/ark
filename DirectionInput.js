@@ -17,7 +17,14 @@ class DirectionInput {
   get direction() {
     return this.heldDirections[0];
   }
-
+  
+  updateDirection(dir) {
+    if (this.heldDirections.indexOf(dir) === -1) {
+      this.heldDirections.unshift(dir);
+    }
+    // Vous pouvez également ajouter une logique pour supprimer la direction après un certain délai si nécessaire
+  }
+  
   init() {
     document.addEventListener("keydown", e => {
       const dir = this.map[e.code];
@@ -31,8 +38,15 @@ class DirectionInput {
       if (index > -1) {
         this.heldDirections.splice(index, 1);
       }
-    })
+    });
 
+    document.getElementById('arrow-up').addEventListener('click', () => this.updateDirection('up'));
+    document.getElementById('arrow-down').addEventListener('click', () => this.updateDirection('down'));
+    document.getElementById('arrow-left').addEventListener('click', () => this.updateDirection('left'));
+    document.getElementById('arrow-right').addEventListener('click', () => this.updateDirection('right'));
+    
   }
+
+  
 
 }
