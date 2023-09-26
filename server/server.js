@@ -125,15 +125,15 @@ app.get('/demo-game-init', async (req, res) => {
 });
 
 // {game, map_id, x, y, direction}
-app.get('/get-change-map', async (req, res) => {
-  console.log("get change map")
-  console.log("req :   ", req.query)
+app.post('/get-change-map', async (req, res) => {
+  // console.log("get change map")
+  // console.log("req.body :   ", req.body)
   
   try {
     // téléchargement de la première map du jeu legend
     const DemoMap = Parse.Object.extend("DemoMap");
     const demoMapQuery = new Parse.Query(DemoMap);
-    const demoMap = await demoMapQuery.get(req.map_id);
+    const demoMap = await demoMapQuery.get(req.body.map_id);
     // console.log("demoMap :   ", demoMap)
     
     if (!demoMap) {

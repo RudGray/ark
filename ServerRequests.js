@@ -5,15 +5,15 @@ const serverRequests = {
 
     async getDemoInit() {
         try {
-            const response = await fetch('/demo-game-init');
+            let response = await fetch('/demo-game-init');
             if (!response.ok) {
                 throw new Error(response.statusText);
             }
-            const data = await response.json();
+            let data = await response.json();
             // console.log("data:   ", data);
             
             // Vérifier si les données du jeu et de la carte sont présentes dans la réponse du serveur
-            const dataChecks = {
+            let dataChecks = {
                 game: "Game data is missing from server response.",
                 map: "Map data is missing from server response.",
                 files: "Files data is missing from server response."
@@ -31,8 +31,8 @@ const serverRequests = {
 
             if (data.files && Array.isArray(data.files)) {
                 for(let i=0; i<data.files.length; i++){
-                  const blob = utils.dataURLtoBlob(data.files[i].fileBase64);
-                  const blobURL = URL.createObjectURL(blob);
+                  let blob = utils.dataURLtoBlob(data.files[i].fileBase64);
+                  let blobURL = URL.createObjectURL(blob);
                   
                   data.files[i]["blobURL"] = blobURL;
                 };
@@ -50,22 +50,24 @@ const serverRequests = {
     
         try {
             // const response = await fetch('/get-change-map', {map_id, x, y, direction});
-            const response = await fetch('/get-change-map', {
+            let response = await fetch('/get-change-map', {
                 method: 'POST', // ou 'GET'
                 headers: {
                   'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ map_id, x, y, direction }),  // pour les requêtes POST
             });
+            // console.log(" ServerRequests.js  getChangeMap()  response:   ", response);
             
             if (!response.ok) {
                 throw new Error(response.statusText);
             }
-            const data = await response.json();
+            let data = await response.json();
             // console.log("data:   ", data);
+            // console.log("data.files:   ", data.files);
             
             // Vérifier si les données du jeu et de la carte sont présentes dans la réponse du serveur
-            const dataChecks = {
+            let dataChecks = {
                 
                 map: "Map data is missing from server response.",
                 files: "Files data is missing from server response."
@@ -83,12 +85,13 @@ const serverRequests = {
 
             if (data.files && Array.isArray(data.files)) {
                 for(let i=0; i<data.files.length; i++){
-                  const blob = utils.dataURLtoBlob(data.files[i].fileBase64);
-                  const blobURL = URL.createObjectURL(blob);
+                  let blob = utils.dataURLtoBlob(data.files[i].fileBase64);
+                  let blobURL = URL.createObjectURL(blob);
                   
                   data.files[i]["blobURL"] = blobURL;
                 };
             }
+            
 
             return data;
         } catch (error) {

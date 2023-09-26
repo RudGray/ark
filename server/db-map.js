@@ -212,14 +212,15 @@
         "name": "hero",
         "isPlayerControlled": true,
         "x": 30,
-        "y": 10
+        "y": 10,
+        "src": "KrRpmqmQCp"
       },
       {
         "type": "Person",
         "name": "streetNpcA",
         "x": 9,
         "y": 11,
-        "src": "QpdEMxVjRAg",
+        "src": "QpdEMxVjRA",
         "behaviorLoop": [
           { "type": "stand", "direction": "right", "time": 1400 },
           { "type": "stand", "direction": "up", "time": 900 }
@@ -258,7 +259,7 @@
         "name": "streetNpcC",
         "x": 22,
         "y": 10,
-        "src": "RpGt6SMMCLg",
+        "src": "RpGt6SMMCL",
         "talking": [
           {
             "required": ["streetBattle"],

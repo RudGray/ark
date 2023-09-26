@@ -59,6 +59,8 @@ const utils = {
   },
 
   findImageBlobUrl(files, objectId) {
+    // console.log(typeof files, Array.isArray(files));  // Affiche le type et vérifie si c'est un tableau
+    // console.log("files: "+JSON.stringify(files));
     const file = files.find(f => f.objectId === objectId);
     return file ? file.blobURL : null;
   },

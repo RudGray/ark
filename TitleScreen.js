@@ -35,7 +35,7 @@ class TitleScreen {
         handler: async () => {
           // Initialise the game,  the map and the first level's cutscenes dans la variable globale
           try {
-            const data = await serverRequests.getDemoInit();
+            await serverRequests.getDemoInit();
             // const response = await fetch(`/demo-game-init`);
             
             // // Vérifier si le statut de la réponse est différent de 200 (OK)
@@ -76,7 +76,7 @@ class TitleScreen {
             // }
 
             this.close();
-            resolve(data);
+            resolve();
 
           } catch (error) {
             console.log('Erreur TitleScreen getDemo ');

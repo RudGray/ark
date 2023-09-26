@@ -13,7 +13,8 @@ class GameObject {
     this.x = utils.withGrid(config.x) || 0;
     this.y = utils.withGrid(config.y) || 0;
     this.direction = config.direction || "down";
-    // console.log("config in constructor GameObjrvy: "+JSON.stringify(config));
+    console.log("config in constructor GameObjrvy: "+JSON.stringify(config));
+
     this.sprite = new Sprite({
       gameObject: this,
       // src: config.blobUrl || "./images/characters/people/hero.png",

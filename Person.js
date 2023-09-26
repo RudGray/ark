@@ -31,16 +31,12 @@ class Person extends GameObject {
   }
 
   startBehavior(state, behavior) {
-    console.log("Person startBehavior");
     //Set character direction to whatever behavior has
     this.direction = behavior.direction;
     
     if (behavior.type === "walk") {
-      console.log("Person startBehavior walk");
       //Stop here if space is not free
-      if (state.map.isSpaceTaken(this.x, this.y, this.direction)) {
-        console.log("Person startBehavior walk isSpaceTaken");
-        
+      if (state.map.isSpaceTaken(this.x, this.y, this.direction)) {       
           behavior.retry && setTimeout(() => {
             this.startBehavior(state, behavior)
           }, 10);
@@ -55,7 +51,6 @@ class Person extends GameObject {
     }
 
     if (behavior.type === "stand") {
-      console.log("Person startBehavior stand");
       this.isStanding = true;
       this.standBehaviorTimeout = setTimeout(() => {
         utils.emitEvent("PersonStandComplete", {

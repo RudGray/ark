@@ -82,11 +82,7 @@ class OverworldEvent {
       const data = await serverRequests.getChangeMap(this.event.map_id, this.event.x, this.event.y, this.event.direction);
       // console.log("data change map: "+data);
       
-      this.map.overworld.startMap(data.map, {
-          x: data.x,
-          y: data.y,
-          direction: data.direction,
-      });
+      this.map.overworld.startMap(window.map, window.files);
 
       // this.map.overworld.startMap( window.OverworldMaps[this.event.map], {
       //   x: this.event.x,

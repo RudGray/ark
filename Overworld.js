@@ -180,7 +180,7 @@ class Overworld {
     progress: this.progress
   })
   // const useSaveFile = await this.titleScreen.init(container);
-  const dataGame = await this.titleScreen.init(container);
+  await this.titleScreen.init(container);
  
 
   //Potentially load saved data
