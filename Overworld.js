@@ -16,8 +16,20 @@ class Overworld {
   * 
   */
   startGameLoop() {
+    console.log("startGameLoop");
     this.how = this.element.querySelector(".how-to-play");
     this.how.style.display = "none";
+
+    this.wrap = this.element.querySelector(".game-container-wrapper");
+    this.wrap.style.width = "100%";
+    // this.wrap.removeProperty("display");
+    // this.wrap.style.width = "100%";
+    // this.wrap.style.position = "relative";
+    // Instancier ArrowPad ici
+    this.arrowPad = new ArrowPad();
+    this.arrowPad.init();
+
+
     const step = () => {
       //Clear off the canvas
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -94,32 +106,12 @@ class Overworld {
   this.map.scaleCutsceneSpaces();
   this.map.mountObjects();
   this.map.extractHero();
+  // this.arrowPad = new ArrowPad();
+  // this.arrowPad.init();
 
-  // console.log("hero x : "+this.map.hero.x)
 
-  // function stringifyWithCircularCheck(obj) {
-  //   const seen = new Set();
-  //   return JSON.stringify(obj, (key, value) => {
-  //     if (typeof value === 'object' && value !== null) {
-  //       if (seen.has(value)) {
-  //         return '[Cyclic object]';
-  //       }
-  //       seen.add(value);
-  //     }
-  //     return value;
-  //   });
-  // }
-
-  // console.log("heroInitialState: "+JSON.stringify(heroInitialState))
-  // console.log("hero: "+stringifyWithCircularCheck(this.map.hero))
   if (heroInitialState) {
-    // const {hero} = this.map.gameObjects;
-
-
-// console.log("this.map.gameObjects: " + stringifyWithCircularCheck(this.map.gameObjects));
-    
-    
-
+   
     this.map.removeWall(this.map.hero.x, this.map.hero.y);
     this.map.hero.x = heroInitialState.x;
     this.map.hero.y = heroInitialState.y;
@@ -127,19 +119,11 @@ class Overworld {
     this.map.addWall(this.map.hero.x, this.map.hero.y);
   }
 
-  // console.log("hero x : "+this.map.hero.x)
-
   this.progress.mapName = map.name;
   this.progress.map_id = map.map_id;
   this.progress.startingHeroX = this.map.hero.x;
   this.progress.startingHeroY = this.map.hero.y;
   this.progress.startingHeroDirection = this.map.hero.direction;
-
-  // console.log("hero x : "+this.map.hero.x)
-  // console.log("config person game object : "+stringifyWithCircularCheck(this.map.hero))
-
-  // console.log("window.game : "+stringifyWithCircularCheck(window.game))
-  // console.log("window.map : "+stringifyWithCircularCheck(window.map))
   
  }
 
@@ -201,6 +185,8 @@ class Overworld {
   //   console.log("Erreur : Le serveur est momentanément indisponible.");
   //   return;
   // }
+
+  
 
   //Load the HUD
   // this.hud = new Hud();

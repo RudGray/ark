@@ -122,6 +122,7 @@ class TitleScreen {
       if (container.firstChild) {
           container.insertBefore(this.element, container.firstChild);
       } else {
+        console.log("bizar bizar")
           container.appendChild(elem);
       }
 

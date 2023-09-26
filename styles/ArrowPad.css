@@ -1,0 +1,113 @@
+.arrow-pad {
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    position: absolute;
+    bottom: 10px;
+    left: -30px;
+    width: 160px;
+    height: 160px;
+}
+
+.arrow-circle {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: lightgray;
+    border: 5px solid #555;
+    box-shadow: 
+        0 0 10px rgba(0,0,0,0.5),
+        inset 0 0 10px rgba(0,0,0,0.5); 
+}
+.arrow-horizontal, .arrow-vertical {
+
+    position: absolute;
+    background-color: black;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
+.arrow-horiz-btn{
+    padding: 0;
+    height: 100%;
+    width: 36px;
+    align-items: center;
+}
+.arrow-verti-btn{
+    padding: 0;
+    width: 100%;
+    align-items: center;
+    height: 36px;
+}
+.arrow-horizontal{
+    height: 40px;
+    width: 80%;
+    left: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between; 
+    flex-direction: row;
+}
+.arrow-vertical{
+    height: 80%;
+    width: 40px;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between; 
+    flex-direction: column;
+    align-items: center;
+}
+
+.arrow-btn {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+}
+
+.arrow {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    /* position: absolute; */
+}
+
+.arrow-up {
+    border-width: 0 10px 20px 10px;
+    border-color: transparent transparent red transparent;
+    /* top: 10px;
+    left: 90px; */
+    top:7px;
+    
+}
+
+.arrow-right {
+    border-width: 10px 0 10px 20px;
+    border-color: transparent transparent transparent red;
+    /* top: 90px;
+    left: 170px; */
+    right: 7px;
+}
+
+.arrow-down {
+    border-width: 20px 10px 0 10px;
+    border-color: red transparent transparent transparent;
+    /* top: 170px;
+    left: 90px; */
+    bottom: 7px;
+}
+
+.arrow-left {
+    border-width: 10px 20px 10px 0;
+    border-color: transparent red transparent transparent;
+    /* top: 90px;
+    left: 10px; */
+    left: 7px;
+}
