@@ -81,7 +81,7 @@
 
 .arrow-up {
     border-width: 0 10px 20px 10px;
-    border-color: transparent transparent red transparent;
+    border-color: transparent transparent #555 transparent;
     /* top: 10px;
     left: 90px; */
     top:7px;
@@ -90,7 +90,7 @@
 
 .arrow-right {
     border-width: 10px 0 10px 20px;
-    border-color: transparent transparent transparent red;
+    border-color: transparent transparent transparent #555;
     /* top: 90px;
     left: 170px; */
     right: 7px;
@@ -98,7 +98,7 @@
 
 .arrow-down {
     border-width: 20px 10px 0 10px;
-    border-color: red transparent transparent transparent;
+    border-color: #555 transparent transparent transparent;
     /* top: 170px;
     left: 90px; */
     bottom: 7px;
@@ -106,7 +106,7 @@
 
 .arrow-left {
     border-width: 10px 20px 10px 0;
-    border-color: transparent red transparent transparent;
+    border-color: transparent #555 transparent transparent;
     /* top: 90px;
     left: 10px; */
     left: 7px;
