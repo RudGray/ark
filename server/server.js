@@ -2,20 +2,22 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const Parse = require('parse/node');
-const ejs = require('ejs');
 const fs = require('fs');
 require('dotenv').config();
 const parser = require('./data-parser.js');
 
 
 // les variables d'environnement
+
+console.log("process.env.APP_ID :   ", process.env.APP_ID);
+console.log("process.env.JAVASCRIPT_ID :   ", process.env.JAVASCRIPT_ID);
+
+
 Parse.initialize(process.env.APP_ID, process.env.JAVASCRIPT_ID);
 Parse.serverURL="https://parseapi.back4app.com";
 
 
 const app = express();
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
 
 
 // Configuration du middleware
