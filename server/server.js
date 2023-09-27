@@ -176,7 +176,11 @@ app.post('/get-change-map', async (req, res) => {
 
 // Lancement du serveur
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Server is running on port ${port}`));
+app.listen(port, () => 
+  console.log(`Server is running on port ${port}`),
+  console.log("process.env.APP_ID :   ", process.env.APP_ID),
+  console.log("process.env.JAVASCRIPT_ID :   ", process.env.JAVASCRIPT_ID)
+);
 
 
 
