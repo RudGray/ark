@@ -3,7 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const Parse = require('parse/node');
-require('dotenv').config();
+const conf = require('dotenv').config();
 const parser = require('./data-parser.js');
 
 
@@ -180,7 +180,9 @@ app.listen(port, () =>
   console.log(`Server is running on port ${port}`),
   console.log("process.env.APP_ID :   ", process.env.APP_ID),
   console.log("process.env.JAVASCRIPT_ID :   ", process.env.JAVASCRIPT_ID),
-  console.log("process.env :   ", process.env)
+  console.log("process.env :   ", process.env),
+  console.log("---------------------------------------------------------------------"),
+  console.log("conf :   ", conf)
 );
 
 
