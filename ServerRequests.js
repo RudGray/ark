@@ -1,11 +1,13 @@
+const isProduction = window.location.hostname === 'www.arkeno.co';
+const apiBaseURL = isProduction ? 'https://www.arkeno.co' : 'http://localhost:3000';
+
+
+
 const serverRequests = {
-
-
-
 
     async getDemoInit() {
         try {
-            let response = await fetch('/demo-game-init');
+            let response = await fetch(`${apiBaseURL}/demo-game-init`);
             if (!response.ok) {
                 throw new Error(response.statusText);
             }
@@ -50,7 +52,7 @@ const serverRequests = {
     
         try {
             // const response = await fetch('/get-change-map', {map_id, x, y, direction});
-            let response = await fetch('/get-change-map', {
+            let response = await fetch(`${apiBaseURL}/get-change-map`, {
                 method: 'POST', // ou 'GET'
                 headers: {
                   'Content-Type': 'application/json',
