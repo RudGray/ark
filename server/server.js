@@ -1,8 +1,8 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const Parse = require('parse/node');
 const fs = require('fs');
+const Parse = require('parse/node');
 require('dotenv').config();
 const parser = require('./data-parser.js');
 
@@ -179,7 +179,8 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => 
   console.log(`Server is running on port ${port}`),
   console.log("process.env.APP_ID :   ", process.env.APP_ID),
-  console.log("process.env.JAVASCRIPT_ID :   ", process.env.JAVASCRIPT_ID)
+  console.log("process.env.JAVASCRIPT_ID :   ", process.env.JAVASCRIPT_ID),
+  console.log("process.env :   ", process.env)
 );
 
 
