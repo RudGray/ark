@@ -1,6 +1,6 @@
 const isProduction = window.location.hostname === 'www.arkeno.co';
 const apiBaseURL = isProduction ? 'https://www.arkeno.co' : 'http://localhost:3000';
-
+console.log("apiBaseURL:   ", apiBaseURL)
 
 
 const serverRequests = {
