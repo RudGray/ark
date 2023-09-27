@@ -8,11 +8,6 @@ const parser = require('./data-parser.js');
 
 
 // les variables d'environnement
-
-console.log("process.env.APP_ID :   ", process.env.APP_ID);
-console.log("process.env.JAVASCRIPT_ID :   ", process.env.JAVASCRIPT_ID);
-
-
 Parse.initialize(process.env.APP_ID, process.env.JAVASCRIPT_ID);
 Parse.serverURL="https://parseapi.back4app.com";
 
@@ -65,7 +60,10 @@ app.get('/player-data/:playerId', async (req, res) => {
 });
 
 app.get('/demo-game-init', async (req, res) => {
+  console.log("----------------------------------------------------------------------------------")
   console.log("demo-game-init")
+  console.log("process.env.APP_ID :   ", process.env.APP_ID);
+  console.log("process.env.JAVASCRIPT_ID :   ", process.env.JAVASCRIPT_ID);
   
   try {
     // téléchargement du jeu legeend
